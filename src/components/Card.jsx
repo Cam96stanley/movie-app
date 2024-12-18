@@ -1,7 +1,16 @@
 import StarIcon from "@mui/icons-material/Star";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 
-export default function Card({ movieState }) {
+export default function Card({
+  movieState,
+  saveData,
+  removeData,
+  addedMovies,
+}) {
+  // Function to check if the movie has already been added
+  const isAdded = (movieId) => addedMovies.includes(movieId);
+
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
       {movieState.map((movie) => (
@@ -33,8 +42,20 @@ export default function Card({ movieState }) {
                 </span>
               </div>
 
-              {/* Add Icon */}
-              <AddCircleOutlineIcon className="text-blue-500 dark:text-red-600 cursor-pointer hover:scale-110 transition-transform" />
+              {/* Add or Remove Icon */}
+              {isAdded(movie.imdbID) ? (
+                // Show Remove button if movie is in the watchlist
+                <RemoveCircleOutlineIcon
+                  className="text-red-600 cursor-pointer hover:scale-110 transition-transform"
+                  onClick={() => removeData(movie)}
+                />
+              ) : (
+                // Show Add button if movie is not in the watchlist
+                <AddCircleOutlineIcon
+                  className="text-blue-500 dark:text-red-600 cursor-pointer hover:scale-110 transition-transform"
+                  onClick={() => saveData(movie)}
+                />
+              )}
             </div>
             <p className="text-sm text-neutral-700 dark:text-neutral-400">
               <strong>Plot:</strong> {movie.Plot || "No plot available"}

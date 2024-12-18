@@ -6,6 +6,9 @@ export default function Home({
   handleSearch,
   searchValue,
   movieState,
+  saveData,
+  addedMovies,
+  removeData,
 }) {
   return (
     <div className="dark:bg-neutral-950">
@@ -17,7 +20,12 @@ export default function Home({
         />
       </div>
       <div className="p-8">
-        <Card movieState={movieState} />
+        <Card
+          movieState={movieState}
+          saveData={saveData}
+          addedMovies={addedMovies}
+          removeData={removeData}
+        />
       </div>
     </div>
   );

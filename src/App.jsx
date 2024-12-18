@@ -1,12 +1,16 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router";
+import { getDatabase, ref, set, remove, push } from "firebase/database";
+import app from "../firebaseConfig";
 import { useState, useEffect } from "react";
 import Header from "./components/Header";
 import Home from "./pages/Home";
+import Watchlist from "./pages/Watchlist";
 
 function App() {
   const [darkMode, setDarkMode] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [movies, setMovies] = useState([]);
+  const [addedMovies, setAddedMovies] = useState([]);
 
   const toggleDarkMode = () => {
     setDarkMode((prevMode) => !prevMode);
@@ -35,7 +39,6 @@ function App() {
             ).then((res) => res.json())
           );
 
-          // Wait for all promises to resolve
           Promise.all(moviePromises)
             .then((detailedMovies) => {
               setMovies(detailedMovies);
@@ -50,6 +53,24 @@ function App() {
       .catch((error) => console.error("Fetch Error:", error));
   };
   console.log(movies);
+
+  const saveData = async (movie) => {
+    try {
+      const db = getDatabase(app);
+      const newDocRef = push(ref(db, "watchlist"));
+      await set(newDocRef, {
+        imdbID: movie.imdbID,
+        title: movie.Title,
+        poster: movie.Poster,
+        ratings: movie.Ratings[0]?.Value || "No rating available",
+        plot: movie.Plot || "No plot available",
+      });
+      alert("Movie saved successfully!");
+      setAddedMovies((prevMovies) => [...prevMovies, movie.imdbID]);
+    } catch (error) {
+      console.error("Error saving movie:", error);
+    }
+  };
 
   return (
     <>
@@ -68,9 +89,12 @@ function App() {
                   handleInputChange={handleInputChange}
                   handleSearch={handleSearch}
                   movieState={movies}
+                  saveData={saveData}
+                  addedMovies={addedMovies}
                 />
               }
             />
+            <Route path="/watchlist" element={<Watchlist />} />
           </Route>
         </Routes>
       </Router>
