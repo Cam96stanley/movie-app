@@ -6,24 +6,30 @@ import BedtimeOutlinedIcon from "@mui/icons-material/BedtimeOutlined";
 export default function Header({ handleToggle, darkMode }) {
   return (
     <>
-      <div className="p-2 flex justify-between items-center bg-gray-100 dark:bg-gray-800 text-black dark:text-white">
+      <div className="p-2 flex justify-between items-center bg-gray-100 dark:bg-neutral-950 text-black dark:text-white">
         {/* Left side */}
-        <p className="text-lg font-bold text-blue-500">NextFlick</p>
+        <p className="text-lg font-bold text-blue-500 dark:text-red-600">
+          NextFlick
+        </p>
 
         {/* Right side */}
         <div className="flex items-center space-x-8">
           {/* Links */}
           <div className="flex space-x-4">
             <NavLink
-              to="#"
+              to="/"
               end
-              className="hover:text-blue-500 dark:hover:text-blue-300 transition-colors"
+              className={({ isActive }) =>
+                isActive ? "active-link" : "default-link"
+              }
             >
               Search
             </NavLink>
             <NavLink
-              to="#"
-              className="hover:text-blue-500 dark:hover:text-blue-300 transition-colors"
+              to="/watchlist"
+              className={({ isActive }) =>
+                isActive ? "active-link" : "default-link"
+              }
             >
               Watchlist
             </NavLink>
@@ -31,7 +37,7 @@ export default function Header({ handleToggle, darkMode }) {
 
           {/* Toggle Switch */}
           <div className="flex items-center space-x-2">
-            <WbSunnyOutlinedIcon className="text-yellow-500 dark:text-gray-400" />
+            <WbSunnyOutlinedIcon className="text-yellow-400 dark:text-gray-400" />
             <button
               onClick={handleToggle}
               className="w-12 h-6 flex items-center bg-gray-300 dark:bg-gray-600 rounded-full p-1"
@@ -42,7 +48,7 @@ export default function Header({ handleToggle, darkMode }) {
                 } transition-transform`}
               ></div>
             </button>
-            <BedtimeOutlinedIcon className="text-gray-600 dark:text-yellow-300" />
+            <BedtimeOutlinedIcon className="text-gray-600 dark:text-red-600" />
           </div>
         </div>
       </div>

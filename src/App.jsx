@@ -22,7 +22,12 @@ function App() {
     <>
       <Router>
         <Routes>
-          <Route path="/" element={<Header handleToggle={toggleDarkMode} />}>
+          <Route
+            path="/"
+            element={
+              <Header handleToggle={toggleDarkMode} darkMode={darkMode} />
+            }
+          >
             <Route index element={<Home />} />
           </Route>
         </Routes>
