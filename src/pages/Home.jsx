@@ -11,7 +11,7 @@ export default function Home({
   removeData,
 }) {
   return (
-    <div className="dark:bg-neutral-950">
+    <div className="dark:bg-neutral-950 min-h-screen">
       <div className="bg-hero-bg bg-cover bg-center w-full">
         <SearchBar
           handleInputChange={handleInputChange}
