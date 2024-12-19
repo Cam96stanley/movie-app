@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.default-link {
+  @apply hover:text-blue-500 dark:hover:text-red-600 transition-colors;
+}
+
+.active-link {
+  @apply text-blue-600 border-b-2 font-bold border-blue-600 dark:text-red-600 dark:border-b-2 dark:border-red-600;
+}
+
+.spinner-border {
+  border-top-color: transparent;
+}
